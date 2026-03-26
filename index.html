@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Online Reader</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+</head>
+<body>
+    <div id="nav-bar">
+        <select id="toc">
+            <option>เลือกบทเรียน/สารบัญ</option>
+        </select>
+        <div class="buttons">
+            <button onclick="changeFontSize(-2)">A-</button>
+            <button onclick="changeFontSize(2)">A+</button>
+            <button id="themeToggle">โหมดมืด/สว่าง</button>
+        </div>
+    </div>
+
+    <div id="viewer"></div>
+
+    <div id="footer">
+        <button id="prev">⬅️ ย้อนกลับ</button>
+        <button id="next">ถัดไป ➡️</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

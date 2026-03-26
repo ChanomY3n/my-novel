@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    font-family: 'Tahoma', sans-serif;
+    background-color: #f4f4f4;
+    transition: 0.3s;
+}
+
+#nav-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#viewer {
+    max-width: 800px;
+    height: 80vh; /* ความสูงหน้าจอ */
+    margin: 20px auto;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#footer {
+    text-align: center;
+    padding: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* สไตล์สำหรับ Dark Mode */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: white;
+}
+body.dark-mode #nav-bar { background: #333; color: white; }
