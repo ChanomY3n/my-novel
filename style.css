@@ -1,44 +1,63 @@
-body {
-    margin: 0;
-    font-family: 'Tahoma', sans-serif;
-    background-color: #f4f4f4;
-    transition: 0.3s;
-}
 
-#nav-bar {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+        /* --- 1. ปรับพื้นหลังหลักเป็นสีขาวสะอาดตา --- */
+        body { 
+            margin: 0; padding: 0; 
+            background: #ffffff; /* เปลี่ยนเป็นสีขาว */
+            display: flex; flex-direction: column; height: 100vh; 
+            font-family: 'Sarabun', sans-serif; overflow: hidden; 
+        }
 
-#viewer {
-    max-width: 800px;
-    height: 80vh; /* ความสูงหน้าจอ */
-    margin: 20px auto;
-    background: white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+        /* --- 2. แถบควบคุมด้านบน (เพิ่มเส้นขอบจางๆ ให้ดูมีมิติบนพื้นขาว) --- */
+        #nav-bar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 25px; background: #fff; 
+            border-bottom: 1px solid #f0f0f0; /* เพิ่มเส้นขอบล่าง */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); z-index: 10; 
+        }
+        
+        button, select { 
+            padding: 8px 18px; border-radius: 20px; 
+            border: 1px solid #eee; background: white; 
+            cursor: pointer; font-family: 'Sarabun';
+            transition: all 0.2s ease;
+        }
 
-#footer {
-    text-align: center;
-    padding: 20px;
-}
+        button:hover { background: #27ae60; border-color: #27ae60; color: #27ae60; }
 
-button {
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
+        /* --- 3. Viewer ทรง A5 (ปรับสีคอนเทนเนอร์รอบข้างให้เทาจางๆ เพื่อให้ตัวหนังสือเด่น) --- */
+        #viewer-container {
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            padding: 15px 0;
+            background: #f9f9f9; /* สีพื้นหลังรอบตัวเล่มให้นวลตา */
+        }
 
-/* สไตล์สำหรับ Dark Mode */
-body.dark-mode {
-    background-color: #1a1a1a;
-    color: white;
-}
-body.dark-mode #nav-bar { background: #333; color: white; }
+        #viewer { 
+            width: 95%; max-width: 580px; height: 82vh; 
+            background: #fff; 
+            border-radius: 4px 10px 10px 4px; 
+            box-shadow: 
+                0 10px 35px rgba(0,0,0,0.07), 
+                inset 20px 0 30px -20px rgba(0,0,0,0.1); /* เงาสันหนังสือด้านซ้าย */
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        /* --- 4. ปุ่มนำทางด้านล่าง --- */
+        #footer-controls {
+            display: flex; justify-content: center; gap: 40px;
+            padding: 20px; background: #fff; 
+            border-top: 1px solid #f0f0f0; z-index: 10;
+        }
+
+        .nav-btn {
+            padding: 12px 50px; font-size: 16px; font-weight: bold;
+            background: linear-gradient(135deg, #2ecc71, #27ae60); 
+            color: white; border: none; border-radius: 30px; 
+            min-width: 150px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.2);
+            transition: transform 0.2s;
+        }
+        
+
+        .nav-btn:hover { transform: translateY(-2px); }
+        .nav-btn:disabled { visibility: hidden; }

@@ -1,41 +1,44 @@
-// 1. โหลดไฟล์หนังสือ (ต้องชื่อตรงกับไฟล์ในโฟลเดอร์)
-const book = ePub("./mybook.epub"); 
+const urlParams = new URLSearchParams(window.location.search);
+const bookFile = urlParams.get('book');
+
+// หาตอนทั้งหมดในเล่มที่กำลังอ่าน
+let episodes = [];
+for (let id in bookData) {
+    if (bookData[id].chapters.some(ch => ch.file === bookFile)) {
+        episodes = bookData[id].chapters;
+        break;
+    }
+}
+if (episodes.length === 0) episodes = bookData['vol1'].chapters;
+
+// โหลดหนังสือ
+const book = ePub("./" + (bookFile || episodes[0].file));
 const rendition = book.renderTo("viewer", {
     width: "100%",
     height: "100%",
-    flow: "paginated" // แบบเปิดทีละหน้าเหมือนหนังสือ
+    flow: "paginated",
+    manager: "continuous",
+    styles: {
+        body: {
+            "padding": "60px 50px !important", // เว้นขอบหน้ากระดาษ A5
+            "font-family": "'Sarabun', sans-serif !important",
+            "line-height": "1.8 !important", // ระยะบรรทัดให้อ่านง่าย
+            "text-align": "justify !important" // จัดตัวหนังสือชิดขอบซ้ายขวาแบบเล่มนิยาย
+        }
+    }
 });
 
-// แสดงหน้าแรก
-rendition.display();
-
-// 2. ปรับขนาดตัวอักษร
-let fontSize = 100;
-function changeFontSize(v) {
-    fontSize += v;
-    rendition.themes.fontSize(fontSize + "%");
-}
-
-// 3. ปุ่มเปลี่ยนหน้า
-document.getElementById("next").addEventListener("click", () => rendition.next());
-document.getElementById("prev").addEventListener("click", () => rendition.prev());
-
-// 4. สารบัญ
-book.loaded.navigation.then((nav) => {
-    const toc = document.getElementById("toc");
-    nav.forEach(chapter => {
-        const option = document.createElement("option");
-        option.textContent = chapter.label;
-        option.value = chapter.href;
-        toc.appendChild(option);
-    });
+// ตั้งค่า Dropdown
+const toc = document.getElementById("toc");
+episodes.forEach(ep => {
+    const opt = document.createElement("option");
+    opt.value = ep.file;
+    opt.textContent = ep.name;
+    if (ep.file === bookFile) opt.selected = true;
+    toc.appendChild(opt);
 });
-document.getElementById("toc").onchange = (e) => rendition.display(e.target.value);
+toc.onchange = (e) => location.href = `reader.html?book=${encodeURIComponent(e.target.value)}&reset=true`;
 
-// 5. โหมดมืด
-document.getElementById("themeToggle").onclick = () => {
-    document.body.classList.toggle("dark-mode");
-    const isDark = document.body.classList.contains("dark-mode");
-    rendition.themes.register("dark", { "body": { "color": "#ccc", "background": "#1a1a1a" }});
-    rendition.themes.select(isDark ? "dark" : "default");
-};
+// ปุ่มเลื่อนหน้า
+document.getElementById("prev").onclick = () => rendition.prev();
+document.getElementById("next").onclick = () => rendition.next();
